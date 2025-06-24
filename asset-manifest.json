@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/ojaegyeong-wholesale-platform/static/css/main.9192e919.css",
-    "main.js": "/ojaegyeong-wholesale-platform/static/js/main.2f4d4ac1.js",
+    "main.css": "/ojaegyeong-wholesale-platform/static/css/main.f2d75df3.css",
+    "main.js": "/ojaegyeong-wholesale-platform/static/js/main.bee6d1e9.js",
     "index.html": "/ojaegyeong-wholesale-platform/index.html",
-    "main.9192e919.css.map": "/ojaegyeong-wholesale-platform/static/css/main.9192e919.css.map",
-    "main.2f4d4ac1.js.map": "/ojaegyeong-wholesale-platform/static/js/main.2f4d4ac1.js.map"
+    "main.f2d75df3.css.map": "/ojaegyeong-wholesale-platform/static/css/main.f2d75df3.css.map",
+    "main.bee6d1e9.js.map": "/ojaegyeong-wholesale-platform/static/js/main.bee6d1e9.js.map"
   },
   "entrypoints": [
-    "static/css/main.9192e919.css",
-    "static/js/main.2f4d4ac1.js"
+    "static/css/main.f2d75df3.css",
+    "static/js/main.bee6d1e9.js"
   ]
 }
