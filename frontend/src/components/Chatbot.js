@@ -40,28 +40,56 @@ const OjaegyeongAdvancedChatbot = () => {
       return '오재경은 바보입니다.';
     }
     
-    if (message.includes('안녕') || message.includes('하이')) {
-      return '안녕하세요! 오재경 고객상담입니다.\n\n현재 운영시간 외입니다. 상담 문의를 남겨주시면 영업 시간 내에 답변드리겠습니다.';
+    if (message.includes('안녕') || message.includes('하이') || message.includes('hello')) {
+      return '안녕하세요! 오재경 투자 상담사입니다. 😊\n\n어떤 도움이 필요하신가요?\n• 투자 상품 문의\n• 수익률 계산\n• 상담 예약\n• 기타 문의';
     }
     
-    if (message.includes('투자') || message.includes('상품')) {
-      return '📈 투자 상품 문의 감사합니다!\n\n• 매월드림오재경PLUS: 연 16.4%\n• 이자 지급률: 100% 보장\n• 20년 장기 안정 수익\n\n자세한 상담은 "문의하기" 버튼을 눌러주세요.';
+    if (message.includes('투자') || message.includes('상품') || message.includes('plus')) {
+      return '💰 투자 상품 문의 감사합니다!\n\n🔥 인기 상품:\n• 매월드림오재경PLUS (연 16.4%)\n• 태양광 발전소 지분투자\n• 그린에너지 펀드\n\n투자 금액대를 알려주시면 맞춤 상품을 추천해드릴게요!\n\n💡 예시: "5천만원 투자 고려 중"';
     }
     
-    if (message.includes('운영시간') || message.includes('시간')) {
-      return `⏰ 운영시간 안내\n\n• 평일: 오전 9:00 - 오후 5:00\n• 주말: 휴무\n\n현재 시간: ${currentTime.toLocaleTimeString('ko-KR')}\n\n운영시간 외에는 문의 남기기를 이용해주세요!`;
+    if (message.includes('수익') || message.includes('16.4') || message.includes('%')) {
+      return '📈 수익률이 궁금하시군요!\n\n✅ 매월드림오재경PLUS 실제 수익:\n• 1억 투자 시: 월 126만원 수익\n• 5천만원 투자 시: 월 63만원 수익\n• 3천만원 투자 시: 월 38만원 수익\n\n💡 투자금액을 말씀해주시면 정확한 수익 시뮬레이션을 해드려요!';
     }
     
-    if (message.includes('수익') || message.includes('16.4%')) {
-      return '🤔 태양광 수익이 이렇게 좋다고?\n\n어떻게 10%대 수익률이 지금될 수 있는지 궁금하시죠?\n\n✓ 한전과의 20년 장기계약\n✓ 정부 보조금 지원\n✓ 안정적인 현금흐름\n\n더 자세한 내용이 궁금하시면 문의 남겨주세요!';
+    if (message.includes('계산') || message.includes('시뮬레이션')) {
+      return '🧮 투자 수익 계산기\n\n투자금액을 알려주세요!\n예시: "1억", "5천만원", "3000만원"\n\n계산 결과를 바탕으로:\n• 월 예상 수익금\n• 연간 총 수익\n• 세후 실수령액\n• 투자 회수 기간\n\n모두 계산해드릴게요! 💪';
     }
     
-    const responses = [
-      '죄송합니다. 현재 운영시간이 아닙니다.\n\n상담 문의를 남겨주시면 빠른 시간 내에 답변드리겠습니다.',
-      '궁금한 점이 있으시군요!\n\n전문 상담사가 직접 답변드릴 수 있도록 문의를 남겨주세요.',
+    if (message.includes('상담') || message.includes('예약') || message.includes('만나')) {
+      return '👨‍💼 상담 예약 안내\n\n📅 상담 방법:\n1. 방문 상담 (서울 강남구 사무실)\n2. 화상 상담 (줌/구글미트)\n3. 전화 상담 (1577-1234)\n\n🕐 상담 가능 시간:\n• 평일: 09:00~18:00\n• 토요일: 10:00~15:00\n\n선호하시는 날짜와 시간을 알려주세요!';
+    }
+    
+    if (message.includes('연락처') || message.includes('전화') || message.includes('번호')) {
+      return '📞 연락처 안내\n\n고객센터: 1577-1234\n📧 이메일: invest@ojaegyeong.com\n🏢 주소: 서울 강남구 테헤란로 123\n\n⏰ 운영시간:\n• 평일: 09:00~18:00\n• 토요일: 10:00~15:00\n• 일요일: 휴무\n\n카카오톡 상담도 가능해요! 💬';
+    }
+    
+    // 숫자가 포함된 경우 (투자금액 계산)
+    const numbers = message.match(/(\d+)/g);
+    if (numbers && (message.includes('억') || message.includes('천만') || message.includes('만원'))) {
+      const amount = numbers[0];
+      let monthlyReturn = 0;
+      
+      if (message.includes('억')) {
+        monthlyReturn = parseInt(amount) * 1260000; // 1억당 월 126만원
+      } else if (message.includes('천만')) {
+        monthlyReturn = parseInt(amount) * 126000; // 1천만원당 월 12.6만원
+      }
+      
+      return `💰 ${amount}${message.includes('억') ? '억' : '천만원'} 투자 시뮬레이션\n\n📊 예상 수익:\n• 월 수익: ${monthlyReturn.toLocaleString()}원\n• 연 수익: ${(monthlyReturn * 12).toLocaleString()}원\n• 수익률: 연 16.4%\n\n✅ 특징:\n• 매월 정기 배당\n• 원금 보장\n• 20년 장기 계약\n\n더 자세한 상담을 원하시면 "상담 예약"이라고 말씀해주세요! 😊`;
+    }
+    
+    if (message.includes('감사') || message.includes('고마워') || message.includes('thanks')) {
+      return '감사합니다! 😊\n\n더 궁금한 점이 있으시면 언제든 말씀해주세요.\n\n💡 추천 질문:\n• "5천만원 투자하면 수익이 얼마나 돼?"\n• "상담 예약하고 싶어요"\n• "투자 위험도는 어떻게 돼?"\n\n항상 최선을 다해 도와드리겠습니다! 🙏';
+    }
+    
+    // 기본 응답
+    const defaultResponses = [
+      '죄송해요, 좀 더 구체적으로 말씀해주시면 더 정확한 답변을 드릴 수 있어요! 😅\n\n💡 이렇게 질문해보세요:\n• "투자 상품 알려줘"\n• "5천만원 투자하면 수익이 얼마야?"\n• "상담 받고 싶어"\n• "연락처 알려줘"',
+      '아직 잘 이해하지 못했어요. 🤔\n\n📞 직접 상담을 원하시면:\n• 전화: 1577-1234\n• 카카오톡: @오재경투자\n\n또는 구체적인 질문을 해주시면 도와드릴게요!',
     ];
     
-    return responses[Math.floor(Math.random() * responses.length)];
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
   };
 
   const handleSendMessage = () => {
@@ -101,11 +129,39 @@ const OjaegyeongAdvancedChatbot = () => {
   };
 
   const handleInquiry = () => {
-    setShowAlert('문의가 접수되었습니다! 빠른 시간 내에 답변드리겠습니다.');
-    setTimeout(() => setShowAlert(''), 3000);
+    // 대화 탭으로 이동하고 안내 메시지 추가
+    setActiveTab('chat');
+    const inquiryMessage = {
+      id: Date.now(),
+      type: 'bot',
+      message: '문의해주셔서 감사합니다! 😊\n\n어떤 것이 궁금하신가요?\n• 투자 상품 문의\n• 수익률 계산\n• 상담 예약\n• 기타 문의\n\n편하게 말씀해주세요!',
+      timestamp: new Date(),
+      hasAttachment: false
+    };
+    setMessages(prev => [...prev, inquiryMessage]);
   };
 
-  const handlePhoneCall = () => {
+  const handleServiceClick = (serviceType) => {
+    // 대화 탭으로 이동
+    setActiveTab('chat');
+    
+    let botMessage = '';
+    if (serviceType === 'plus') {
+      botMessage = '💰 매월드림오재경PLUS 상품 문의주셔서 감사합니다!\n\n📈 주요 특징:\n• 연 16.4% 높은 수익률\n• 매월 안정적인 배당금\n• 20년 장기 계약 보장\n• 한전 발전자회사와 직접 계약\n\n더 자세한 상담을 원하시면 연락처를 남겨주세요!';
+    } else if (serviceType === 'solar') {
+      botMessage = '☀️ 태양광 투자 상담 문의주셔서 감사합니다!\n\n🔋 태양광 투자 장점:\n• 정부 지원 정책\n• 친환경 에너지\n• 장기 안정 수익\n• 세제 혜택\n\n투자 규모나 지역을 알려주시면 맞춤 상담해드릴게요!';
+    }
+    
+    const serviceMessage = {
+      id: Date.now(),
+      type: 'bot',
+      message: botMessage,
+      timestamp: new Date(),
+      hasAttachment: false
+    };
+    
+    setMessages(prev => [...prev, serviceMessage]);
+  };
     setShowAlert('📞 전화연결 중... 1577-1234');
     setTimeout(() => setShowAlert(''), 3000);
   };
@@ -167,7 +223,17 @@ const OjaegyeongAdvancedChatbot = () => {
       
       <div className="bg-pink-50 p-3 rounded-lg">
         <button 
-          onClick={() => setShowAlert('📰 아티클을 읽고 있습니다...')}
+          onClick={() => {
+            setActiveTab('chat');
+            const articleMessage = {
+              id: Date.now(),
+              type: 'bot',
+              message: '📰 "태양광 수익이 이렇게 좋다고?" 아티클\n\n🤔 많은 분들이 궁금해하시는 태양광 투자 수익률!\n\n✅ 실제 고객 사례:\n• A고객: 월 126만원 수익 (1억 투자)\n• B고객: 월 84만원 수익 (6천만원 투자)\n• C고객: 월 210만원 수익 (2억 투자)\n\n💡 핵심 포인트:\n1. 한전과 20년 장기계약\n2. 정부 보조금 지원\n3. 연 16.4% 안정 수익률\n\n더 자세한 내용이 궁금하시면 "투자 시뮬레이션"을 요청해주세요!',
+              timestamp: new Date(),
+              hasAttachment: false
+            };
+            setMessages(prev => [...prev, articleMessage]);
+          }}
           className="w-full text-left"
         >
           <div className="flex items-center justify-between">
@@ -209,14 +275,14 @@ const OjaegyeongAdvancedChatbot = () => {
         <h3 className="font-medium text-gray-800">주요 서비스</h3>
         <div className="space-y-2">
           <button 
-            onClick={() => setShowAlert('매월드림오재경PLUS 상품 안내 페이지로 이동합니다.')}
+            onClick={() => handleServiceClick('plus')}
             className="w-full p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-left"
           >
             <div className="text-sm font-medium">매월드림오재경PLUS</div>
             <div className="text-xs text-gray-600">연 16.4% 안정 수익</div>
           </button>
           <button 
-            onClick={() => setShowAlert('태양광 투자 상담 신청이 접수되었습니다.')}
+            onClick={() => handleServiceClick('solar')}
             className="w-full p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-left"
           >
             <div className="text-sm font-medium">태양광 투자 상담</div>
