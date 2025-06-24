@@ -17,6 +17,7 @@ const OjaegyeongAdvancedChatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [operatingHours, setOperatingHours] = useState({ start: 0, end: 24 });
   const [currentTime] = useState(new Date());
+  const [showAlert, setShowAlert] = useState('');
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -99,6 +100,26 @@ const OjaegyeongAdvancedChatbot = () => {
     }
   };
 
+  const handleInquiry = () => {
+    setShowAlert('문의가 접수되었습니다! 빠른 시간 내에 답변드리겠습니다.');
+    setTimeout(() => setShowAlert(''), 3000);
+  };
+
+  const handlePhoneCall = () => {
+    setShowAlert('📞 전화연결 중... 1577-1234');
+    setTimeout(() => setShowAlert(''), 3000);
+  };
+
+  const handleKakaoTalk = () => {
+    setShowAlert('💬 카카오톡으로 연결 중...');
+    setTimeout(() => setShowAlert(''), 3000);
+  };
+
+  const handleSettingClick = (setting) => {
+    setShowAlert(`${setting} 설정 페이지로 이동합니다.`);
+    setTimeout(() => setShowAlert(''), 2000);
+  };
+
   const handleFileUpload = () => {
     // 파일 업로드 시뮬레이션
     const fileMessage = {
@@ -127,19 +148,28 @@ const OjaegyeongAdvancedChatbot = () => {
       <h3 className="font-semibold text-gray-800">다른 방법으로 문의</h3>
       
       <div className="grid grid-cols-2 gap-3">
-        <button className="flex items-center space-x-2 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+        <button 
+          onClick={handlePhoneCall}
+          className="flex items-center space-x-2 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+        >
           <Phone className="text-blue-600" size={20} />
           <span className="text-sm text-blue-600">전화 상담</span>
         </button>
         
-        <button className="flex items-center space-x-2 p-3 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors">
+        <button 
+          onClick={handleKakaoTalk}
+          className="flex items-center space-x-2 p-3 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors"
+        >
           <MessageSquare className="text-yellow-600" size={20} />
           <span className="text-sm text-yellow-600">카카오톡</span>
         </button>
       </div>
       
       <div className="bg-pink-50 p-3 rounded-lg">
-        <button className="w-full text-left">
+        <button 
+          onClick={() => setShowAlert('📰 아티클을 읽고 있습니다...')}
+          className="w-full text-left"
+        >
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm font-medium text-pink-700">📰 태양광 수익이 이렇게 좋다고?</div>
@@ -178,14 +208,20 @@ const OjaegyeongAdvancedChatbot = () => {
       <div className="space-y-2">
         <h3 className="font-medium text-gray-800">주요 서비스</h3>
         <div className="space-y-2">
-          <div className="p-3 bg-gray-50 rounded-lg">
+          <button 
+            onClick={() => setShowAlert('매월드림오재경PLUS 상품 안내 페이지로 이동합니다.')}
+            className="w-full p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-left"
+          >
             <div className="text-sm font-medium">매월드림오재경PLUS</div>
             <div className="text-xs text-gray-600">연 16.4% 안정 수익</div>
-          </div>
-          <div className="p-3 bg-gray-50 rounded-lg">
+          </button>
+          <button 
+            onClick={() => setShowAlert('태양광 투자 상담 신청이 접수되었습니다.')}
+            className="w-full p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-left"
+          >
             <div className="text-sm font-medium">태양광 투자 상담</div>
             <div className="text-xs text-gray-600">20년 장기 안정 투자</div>
-          </div>
+          </button>
         </div>
       </div>
     </div>
@@ -196,29 +232,44 @@ const OjaegyeongAdvancedChatbot = () => {
       <h3 className="font-semibold text-gray-800">설정</h3>
       
       <div className="space-y-3">
-        <button className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+        <button 
+          onClick={() => handleSettingClick('알림')}
+          className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+        >
           <span className="text-sm">알림 설정</span>
           <ChevronRight size={16} className="text-gray-400" />
         </button>
         
-        <button className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+        <button 
+          onClick={() => handleSettingClick('언어')}
+          className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+        >
           <span className="text-sm">언어 설정</span>
           <span className="text-xs text-gray-500">한국어</span>
         </button>
         
-        <button className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+        <button 
+          onClick={() => handleSettingClick('고객센터')}
+          className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+        >
           <span className="text-sm">고객센터</span>
           <ChevronRight size={16} className="text-gray-400" />
         </button>
         
-        <button className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+        <button 
+          onClick={() => handleSettingClick('버전 정보')}
+          className="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+        >
           <span className="text-sm">버전 정보</span>
           <span className="text-xs text-gray-500">v1.0.0</span>
         </button>
       </div>
       
       <div className="pt-4 border-t">
-        <button className="w-full text-center text-sm text-red-500">
+        <button 
+          onClick={() => setShowAlert('로그아웃 되었습니다.')}
+          className="w-full text-center text-sm text-red-500 hover:text-red-600 transition-colors"
+        >
           로그아웃
         </button>
       </div>
@@ -285,7 +336,10 @@ const OjaegyeongAdvancedChatbot = () => {
 
             {/* 문의하기 버튼 */}
             <div className="px-4 py-2">
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium flex items-center justify-center space-x-2 hover:bg-blue-700 transition-colors">
+              <button 
+                onClick={handleInquiry}
+                className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium flex items-center justify-center space-x-2 hover:bg-blue-700 transition-colors"
+              >
                 <Send size={16} />
                 <span>문의하기</span>
               </button>
@@ -350,7 +404,14 @@ const OjaegyeongAdvancedChatbot = () => {
 
       {/* 챗봇 창 */}
       {isOpen && (
-        <div className="bg-white rounded-lg shadow-2xl w-80 h-[500px] flex flex-col overflow-hidden">
+        <div className="bg-white rounded-lg shadow-2xl w-80 h-[500px] flex flex-col overflow-hidden relative">
+          {/* 알림 메시지 */}
+          {showAlert && (
+            <div className="absolute top-0 left-0 right-0 bg-green-500 text-white text-sm p-2 text-center z-10 animate-pulse">
+              {showAlert}
+            </div>
+          )}
+          
           {/* 헤더 */}
           <div className="bg-blue-600 text-white p-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -382,7 +443,7 @@ const OjaegyeongAdvancedChatbot = () => {
           <div className="bg-white border-t flex">
             <button
               onClick={() => setActiveTab('home')}
-              className={`flex-1 py-3 px-4 flex flex-col items-center space-y-1 ${activeTab === 'home' ? 'text-blue-600' : 'text-gray-400'}`}
+              className={`flex-1 py-3 px-4 flex flex-col items-center space-y-1 transition-colors hover:bg-gray-50 ${activeTab === 'home' ? 'text-blue-600 bg-blue-50' : 'text-gray-400'}`}
             >
               <Home size={20} />
               <span className="text-xs">홈</span>
@@ -390,7 +451,7 @@ const OjaegyeongAdvancedChatbot = () => {
             
             <button
               onClick={() => setActiveTab('chat')}
-              className={`flex-1 py-3 px-4 flex flex-col items-center space-y-1 relative ${activeTab === 'chat' ? 'text-blue-600' : 'text-gray-400'}`}
+              className={`flex-1 py-3 px-4 flex flex-col items-center space-y-1 relative transition-colors hover:bg-gray-50 ${activeTab === 'chat' ? 'text-blue-600 bg-blue-50' : 'text-gray-400'}`}
             >
               <MessageCircle size={20} />
               <span className="text-xs">대화</span>
@@ -401,7 +462,7 @@ const OjaegyeongAdvancedChatbot = () => {
             
             <button
               onClick={() => setActiveTab('settings')}
-              className={`flex-1 py-3 px-4 flex flex-col items-center space-y-1 ${activeTab === 'settings' ? 'text-blue-600' : 'text-gray-400'}`}
+              className={`flex-1 py-3 px-4 flex flex-col items-center space-y-1 transition-colors hover:bg-gray-50 ${activeTab === 'settings' ? 'text-blue-600 bg-blue-50' : 'text-gray-400'}`}
             >
               <Settings size={20} />
               <span className="text-xs">설정</span>
