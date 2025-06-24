@@ -92,42 +92,6 @@ const OjaegyeongAdvancedChatbot = () => {
     return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
   };
 
-  const handleSendMessage = () => {
-    if (!inputMessage.trim()) return;
-
-    const userMessage = {
-      id: Date.now(),
-      type: 'user',
-      message: inputMessage,
-      timestamp: new Date(),
-      hasAttachment: false
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
-    setIsTyping(true);
-
-    setTimeout(() => {
-      const botResponse = {
-        id: Date.now() + 1,
-        type: 'bot',
-        message: getBotResponse(inputMessage),
-        timestamp: new Date(),
-        hasAttachment: false
-      };
-      
-      setMessages(prev => [...prev, botResponse]);
-      setIsTyping(false);
-    }, 1500);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
   const handleInquiry = () => {
     // 대화 탭으로 이동하고 안내 메시지 추가
     setActiveTab('chat');
@@ -162,13 +126,29 @@ const OjaegyeongAdvancedChatbot = () => {
     
     setMessages(prev => [...prev, serviceMessage]);
   };
-    setShowAlert('📞 전화연결 중... 1577-1234');
-    setTimeout(() => setShowAlert(''), 3000);
+
+  const handlePhoneCall = () => {
+    setActiveTab('chat');
+    const phoneMessage = {
+      id: Date.now(),
+      type: 'bot',
+      message: '📞 전화 상담을 원하시는군요!\n\n고객센터 번호: 1577-1234\n운영시간: 평일 09:00-18:00\n\n지금 바로 연결해드릴까요?\n아니면 편한 시간에 연락드릴 수 있도록 연락처를 남겨주세요!',
+      timestamp: new Date(),
+      hasAttachment: false
+    };
+    setMessages(prev => [...prev, phoneMessage]);
   };
 
   const handleKakaoTalk = () => {
-    setShowAlert('💬 카카오톡으로 연결 중...');
-    setTimeout(() => setShowAlert(''), 3000);
+    setActiveTab('chat');
+    const kakaoMessage = {
+      id: Date.now(),
+      type: 'bot',
+      message: '💬 카카오톡 상담을 원하시는군요!\n\n카카오톡 채널: @오재경투자\n\n1. 카카오톡 검색에서 "오재경투자" 검색\n2. 채널 추가 후 메시지 전송\n3. 전문 상담사가 실시간 답변\n\n또는 여기서 바로 상담받으셔도 됩니다! 😊',
+      timestamp: new Date(),
+      hasAttachment: false
+    };
+    setMessages(prev => [...prev, kakaoMessage]);
   };
 
   const handleSettingClick = (setting) => {
@@ -197,6 +177,42 @@ const OjaegyeongAdvancedChatbot = () => {
       };
       setMessages(prev => [...prev, botResponse]);
     }, 1000);
+  };
+
+  const handleSendMessage = () => {
+    if (!inputMessage.trim()) return;
+
+    const userMessage = {
+      id: Date.now(),
+      type: 'user',
+      message: inputMessage,
+      timestamp: new Date(),
+      hasAttachment: false
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInputMessage('');
+    setIsTyping(true);
+
+    setTimeout(() => {
+      const botResponse = {
+        id: Date.now() + 1,
+        type: 'bot',
+        message: getBotResponse(inputMessage),
+        timestamp: new Date(),
+        hasAttachment: false
+      };
+      
+      setMessages(prev => [...prev, botResponse]);
+      setIsTyping(false);
+    }, 1500);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
   };
 
   const ContactMethods = () => (
