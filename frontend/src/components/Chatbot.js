@@ -8,8 +8,36 @@ const OjaegyeongAdvancedChatbot = () => {
     {
       id: 1,
       type: 'bot',
-      message: '안녕하세요 오재경입니다 ☀️\n\n✓ 연 16.4% 받는 매월드림오재경PLUS\n✓ 이자 지급률 100%\n✓ 한전 발전자회사와 20년 고정가격계약\n\n지금은 오재경 운영시간이 아닙니다.',
-      timestamp: new Date(),
+      message: '안녕하세요 오재경입니다 ☀️\n\n✓ 연 16.4% 받는 매월드림오재경PLUS\n✓ 이자 지급률 100%\n✓ 한전 발전자회사와 20년 고정가격계약\n\n무엇을 도와드릴까요?',
+      timestamp: new Date(Date.now() - 300000),
+      hasAttachment: false
+    },
+    {
+      id: 2,
+      type: 'user',
+      message: '투자 상품에 대해 알고 싶어요',
+      timestamp: new Date(Date.now() - 240000),
+      hasAttachment: false
+    },
+    {
+      id: 3,
+      type: 'bot',
+      message: '💰 투자 상품 문의 감사합니다!\n\n🔥 인기 상품:\n• 매월드림오재경PLUS (연 16.4%)\n• 태양광 발전소 지분투자\n• 그린에너지 펀드\n\n투자 금액대를 알려주시면 맞춤 상품을 추천해드릴게요!',
+      timestamp: new Date(Date.now() - 180000),
+      hasAttachment: false
+    },
+    {
+      id: 4,
+      type: 'user',
+      message: '5천만원 정도 투자를 고려하고 있어요',
+      timestamp: new Date(Date.now() - 120000),
+      hasAttachment: false
+    },
+    {
+      id: 5,
+      type: 'bot',
+      message: '💰 5천만원 투자 시뮬레이션\n\n📊 예상 수익:\n• 월 수익: 630,000원\n• 연 수익: 7,560,000원\n• 수익률: 연 16.4%\n\n✅ 특징:\n• 매월 정기 배당\n• 원금 보장\n• 20년 장기 계약\n\n더 자세한 상담을 원하시면 "상담 예약"이라고 말씀해주세요! 😊',
+      timestamp: new Date(Date.now() - 60000),
       hasAttachment: false
     }
   ]);
@@ -18,15 +46,25 @@ const OjaegyeongAdvancedChatbot = () => {
   const [operatingHours, setOperatingHours] = useState({ start: 0, end: 24 });
   const [currentTime] = useState(new Date());
   const [showAlert, setShowAlert] = useState('');
+  const [isAtBottom, setIsAtBottom] = useState(true);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleScroll = (e) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.target;
+    const isBottom = scrollHeight - scrollTop === clientHeight;
+    setIsAtBottom(isBottom);
+  };
+
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (isAtBottom) {
+      scrollToBottom();
+    }
+  }, [messages, isAtBottom]);
 
   const isOperatingTime = () => {
     const hour = currentTime.getHours();
@@ -366,7 +404,32 @@ const OjaegyeongAdvancedChatbot = () => {
         return (
           <>
             {/* 메시지 영역 */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div 
+              ref={messagesContainerRef}
+              className="flex-1 overflow-y-auto p-4 space-y-3 relative custom-scrollbar"
+              style={{
+                maxHeight: '250px',
+                minHeight: '200px',
+                scrollbarWidth: 'thin',
+                scrollbarColor: '#CBD5E0 #F7FAFC'
+              }}
+              onScroll={handleScroll}
+            >
+              {/* 스크롤 인디케이터 */}
+              {!isAtBottom && messages.length > 3 && (
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+                  <button
+                    onClick={() => {
+                      setIsAtBottom(true);
+                      scrollToBottom();
+                    }}
+                    className="bg-blue-600 text-white px-3 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-200 text-xs flex items-center space-x-2 hover:scale-105"
+                  >
+                    <span className="animate-pulse">↓</span>
+                    <span>최신 메시지 보기</span>
+                  </button>
+                </div>
+              )}
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -472,6 +535,25 @@ const OjaegyeongAdvancedChatbot = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
+      {/* CSS 스타일 */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+          }
+        `
+      }} />
       {/* 챗봇 아이콘 */}
       {!isOpen && (
         <button
