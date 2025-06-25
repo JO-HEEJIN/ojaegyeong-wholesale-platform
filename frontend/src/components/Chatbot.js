@@ -303,30 +303,35 @@ const OjaegyeongDarkChatbot = () => {
   );
 
   // 문의하기 중간 화면
-  const InquiryView = () => (
-    <div className="flex-1 flex flex-col bg-gray-800">
-      <div className="flex items-center p-4 border-b border-gray-700">
-        <button onClick={() => setCurrentView('main')} className="mr-4">
-          <ArrowLeft className="text-white" size={20} />
-        </button>
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center">
-            <span className="text-blue-600 font-bold text-sm">M</span>
-          </div>
-          <div>
-            <div className="text-white font-medium">오재경</div>
-            <div className="text-gray-400 text-xs">오후 5:00부터 운영해요</div>
-          </div>
+// 문의하기 중간 화면
+const InquiryView = () => (
+  <div className="flex-1 flex flex-col bg-gray-800">
+    <div className="flex items-center p-4 border-b border-gray-700">
+      <button onClick={() => setCurrentView('main')} className="mr-4">
+        <ArrowLeft className="text-white" size={20} />
+      </button>
+      <div className="flex items-center space-x-3">
+        <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center">
+          <span className="text-blue-600 font-bold text-sm">M</span>
+        </div>
+        <div>
+          <div className="text-white font-medium">오재경</div>
+          <div className="text-gray-400 text-xs">오후 5:00부터 운영해요</div>
         </div>
       </div>
+    </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center p-6">
-        <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-6">
+    {/* 여기가 핵심 수정 부분 */}
+    <div className="flex-1 overflow-y-auto p-6" style={{ maxHeight: '500px' }}>
+      <div className="flex flex-col items-center space-y-6">
+        <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center">
           <span className="text-blue-600 font-bold text-2xl">M</span>
         </div>
 
-        <h2 className="text-white text-xl font-semibold mb-2">오재경에 문의하기</h2>
-        <p className="text-gray-400 text-sm mb-8">운영시간 보기</p>
+        <div className="text-center">
+          <h2 className="text-white text-xl font-semibold mb-2">오재경에 문의하기</h2>
+          <p className="text-gray-400 text-sm">운영시간 보기</p>
+        </div>
 
         <div className="w-full max-w-sm">
           <div className="bg-gray-700 rounded-xl p-4 mb-6">
@@ -371,7 +376,8 @@ const OjaegyeongDarkChatbot = () => {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 
   // 채팅 화면
   const ChatView = () => (
