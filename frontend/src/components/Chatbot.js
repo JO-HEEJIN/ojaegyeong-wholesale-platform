@@ -96,7 +96,8 @@ const OjaegyeongDarkChatbot = () => {
 
   // 메인 홈 화면
   const HomeView = () => (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto" style={{ maxHeight: '500px' }}>
+
       {/* 헤더 정보 */}
       <div className="p-6 text-center border-b border-gray-700">
         <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-3">
@@ -219,7 +220,7 @@ const OjaegyeongDarkChatbot = () => {
 
   // 설정 화면
   const SettingsView = () => (
-    <div className="flex-1 overflow-y-auto p-6">
+    <div className="flex-1 overflow-y-auto p-6" style={{ maxHeight: '500px' }}>
       {/* 프로필 섹션 */}
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-3">
@@ -474,8 +475,8 @@ const OjaegyeongDarkChatbot = () => {
 
       {/* 챗봇 창 */}
       {isOpen && (
-        <div className="bg-gray-800 rounded-2xl shadow-2xl w-80 h-[600px] flex flex-col overflow-hidden">
-          {/* 현재 뷰가 main이 아닐 때는 탭을 숨김 */}
+        <div className="bg-gray-800 rounded-2xl shadow-2xl w-80 h-[600px] flex flex-col overflow-hidden relative">
+        {/* 현재 뷰가 main이 아닐 때는 탭을 숨김 */}
           {currentView === 'main' && (
             <>
               {/* 헤더 */}
